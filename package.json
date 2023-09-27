@@ -1,0 +1,12 @@
+{
+  "name": "restaurante-api",
+  "version": "1.0.0",
+  "description": "Api de um restaurante",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./src/index",
+    "start": "node ./src/index"
+  },
+  "author": "Luiza Ferreira",
+  "license": "ISC"
+}
