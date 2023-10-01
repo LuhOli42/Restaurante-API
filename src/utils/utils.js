@@ -1,7 +1,7 @@
 const verificadorHorarios = (horarios) => {
   const array = [true, ""];
 
-  for (const [key, value] of Object.entries(horarios)) {
+  for (let [key, value] of Object.entries(horarios)) {
     if (value) {
       let horario = value.split("/");
       if (horario.length !== 2) {

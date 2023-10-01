@@ -1,4 +1,3 @@
-
 drop table if exists produtos; 
 
 drop table if exists categorias_produtos ;
@@ -12,13 +11,13 @@ drop table if exists horario_de_funcionamento ;
 
 create table horario_de_funcionamento (
   id serial primary key unique,
-  seg text,
-  ter text,
-  qua text,
-  qui text,
-  sex text,
-  sab text,
-  dom text
+  seg text default null,
+  ter text default null,
+  qua text default null,
+  qui text default null,
+  sex text default null,
+  sab text default null,
+  dom text default null
 );
 
 create table restaurantes (
@@ -52,3 +51,4 @@ create table produtos (
     categoria integer references categorias_produtos(id) not null,
     promocao integer references promocao_produtos(id)
 );
+
