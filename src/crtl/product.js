@@ -1,20 +1,22 @@
-const cadastrar = async (req, res) => {};
+const create = async (req, res) => {};
 
-const listar = async (req, res) => {};
+const list = async (req, res) => {};
 
-const listarTodos = async (req, res) => {};
+const listAllProducts = async (req, res) => {};
 
-const dados = async (req, res) => {};
+const data = async (req, res) => {};
 
-const atualizar = async (req, res) => {};
+const update = async (req, res) => {};
 
-const deletar = async (req, res) => {};
+const del = async (req, res) => {};
+const listRestaurant = async (req, res) => {};
 
 module.exports = {
-  cadastrar,
-  listar,
-  dados,
-  atualizar,
-  deletar,
-  listarTodos,
+  create,
+  list,
+  data,
+  update,
+  listAllProducts,
+  listRestaurant,
+  del,
 };

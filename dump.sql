@@ -1,3 +1,15 @@
+
+drop table if exists produtos; 
+
+drop table if exists categorias_produtos ;
+
+drop table if exists promocao_produtos ;
+
+drop table if exists restaurantes ;
+
+drop table if exists horario_de_funcionamento ;
+
+
 create table horario_de_funcionamento (
   id serial primary key unique,
   seg text,
@@ -11,6 +23,7 @@ create table horario_de_funcionamento (
 
 create table restaurantes (
     id serial primary key unique,
+    email text not null,
     nome text not null,
     senha text not null,
     foto text,
