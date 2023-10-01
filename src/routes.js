@@ -5,7 +5,7 @@ const product = require("./crtl/product");
 
 const routes = express();
 
-routes.get("/listrestaurant", restaurant.list);
+routes.get("/listRestaurants", restaurant.list);
 routes.get("/listAllProducts", product.listAllProducts);
 routes.get("/dataRestaurant/:id", restaurant.data);
 routes.get("/listRestaurantProduct", product.listRestaurant);

@@ -2,6 +2,11 @@
 
 Repositorio criado para o desafio de backend da goomer
 
+## funções para adicionar futuramente
+
+listar restaurante por horario de funcionamento
+Email de confirmação --estudar
+
 Como testar
 Voce pode testar atravez desse link
 Ou
