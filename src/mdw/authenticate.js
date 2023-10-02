@@ -21,7 +21,6 @@ const restaurant = async (req, res, next) => {
       id: tokenVerify.id,
       email: tokenVerify.email,
       nome: tokenVerify.nome,
-      horarioTabela: tokenVerify.horarioTabela,
     };
 
     req.restaurant = ojbRestaurant;

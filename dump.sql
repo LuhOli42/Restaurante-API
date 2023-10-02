@@ -1,7 +1,5 @@
 drop table if exists produtos; 
 
-drop table if exists categorias_produtos ;
-
 drop table if exists promocao_produtos ;
 
 drop table if exists restaurantes ;
@@ -30,25 +28,19 @@ create table restaurantes (
     horarios integer references horario_de_funcionamento(id) not null
 );
 
-create table categorias_produtos (
+create table produtos (
     id serial primary key unique,
-    descricao text not null
+    restaurante integer references restaurantes(id) not null,
+    nome text not null unique,
+    preco integer not null,
+    categoria text not null
 );
 
 create table promocao_produtos (
     id serial primary key unique,
     descricao text not null,
     preco integer not null,
-    dia_da_semana text not null,
-    horario text not null
+    horarios_tabela integer references horario_de_funcionamento(id) not null,
+    restaurante integer references restaurantes(id) not null,
+    produto_id integer references produtos(id) not null
 );
-
-create table produtos (
-    id serial primary key unique,
-    restaurate integer references restaurantes(id) not null,
-    nome text not null,
-    preco integer not null,
-    categoria integer references categorias_produtos(id) not null,
-    promocao integer references promocao_produtos(id)
-);
-

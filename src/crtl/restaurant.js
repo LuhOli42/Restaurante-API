@@ -10,10 +10,11 @@ const create = async (req, res) => {
         "Nome, email, senha e endereço são campos obrigatórios, por favor preencha todos os campos",
     });
   }
-  const verificar = utils.verificadorHorarios(horarios);
 
-  if (!verificar[0]) {
-    return res.status(400).json({ message: verificar[1] });
+  if (!utils.verificadorHorarios(horarios).verify) {
+    return res
+      .status(400)
+      .json({ message: utils.verificadorHorarios(horarios).message });
   }
 
   try {
@@ -63,6 +64,7 @@ const create = async (req, res) => {
 
     return res.status(200).json(objRestaurante);
   } catch (error) {
+    console.log(error);
     return res.status(500).json(error.message);
   }
 };
@@ -184,10 +186,10 @@ const update = async (req, res) => {
     });
   }
   if (horarios) {
-    const verificar = utils.verificadorHorarios(horarios);
-
-    if (!verificar[0]) {
-      return res.status(400).json({ message: verificar[1] });
+    if (!utils.verificadorHorarios(horarios).verify) {
+      return res
+        .status(400)
+        .json({ message: utils.verificadorHorarios(horarios).message });
     }
   }
   try {
