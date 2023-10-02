@@ -324,7 +324,68 @@ const data = async (req, res) => {
 };
 
 const listRestaurant = async (req, res) => {
+  const { restaurantId: restaurante } = req.params;
   try {
+    const existeRestaurante = await knex("restaurantes")
+      .where({
+        id: restaurante,
+      })
+      .first();
+
+    if (!existeRestaurante) {
+      return res.status(404).json({ message: "restaurante não localizado" });
+    }
+    const produtosEncontrados = await knex("produtos")
+      .join("promocao_produtos as pp", "produtos.id", "pp.produto_id")
+      .join("horario_de_funcionamento as h", "pp.horarios_tabela", "h.id")
+      .select(
+        "produtos.nome as p_nomeDoProduto",
+        "produtos.preco as p_precos",
+        "produtos.categoria as p_categoria",
+        "pp.descricao as pp_descricao",
+        "pp.preco as pp_preco",
+        "h.seg as h_seg",
+        "h.ter as h_ter",
+        "h.qua as h_qua",
+        "h.qui as h_qui",
+        "h.sex as h_sex",
+        "h.sab as h_sab",
+        "h.dom as h_dom"
+      )
+      .where("produtos.restaurante", restaurante)
+      .then(function (rows) {
+        if (!rows.length === 0) {
+          return rows;
+        }
+        for (let x = 0; x < rows.length; x++) {
+          rows[x].numeroDoProduto = x + 1;
+          rows[x].promo = {};
+          rows[x].promo.numero = x + 1;
+          rows[x].promo.horarios = {};
+          for (const [key, value] of Object.entries(rows[x])) {
+            if (key.split("_")[0] === "pp") {
+              const nome = key.split("_")[1];
+              rows[x].promo[nome] = value;
+              delete rows[x][key];
+            }
+            if (key.split("_")[0] === "h") {
+              const nome = key.split("_")[1];
+              if (value) {
+                rows[x].promo.horarios[nome] = value;
+              }
+              delete rows[x][key];
+            }
+            if (key.split("_")[0] === "p") {
+              const nome = key.split("_")[1];
+              rows[x][nome] = value;
+              delete rows[x][key];
+            }
+          }
+        }
+        return rows;
+      });
+
+    return res.status(200).json(produtosEncontrados);
   } catch (error) {
     return res.status(500).json(error.message);
   }
@@ -332,6 +393,60 @@ const listRestaurant = async (req, res) => {
 
 const listAllProducts = async (req, res) => {
   try {
+    const todosOsProdutosComSeusRestaurantes = await knex("produtos")
+      .join("restaurantes as r", "produtos.restaurante", "r.id")
+      .join("horario_de_funcionamento as h", "r.horarios", "h.id")
+      .select(
+        "r.nome as r_restauranteNome",
+        "r.email as r_email",
+        "r.foto as r_foto",
+        "r.endereco as r_endereco",
+        "produtos.nome as p_nome",
+        "produtos.preco as p_precos",
+        "produtos.categoria as p_categoria",
+        "h.seg as h_seg",
+        "h.ter as h_ter",
+        "h.qua as h_qua",
+        "h.qui as h_qui",
+        "h.sex as h_sex",
+        "h.sab as h_sab",
+        "h.dom as h_dom"
+      )
+      .then(function (rows) {
+        if (rows.length === 0) {
+          return rows;
+        }
+        for (let x = 0; x < rows.length; x++) {
+          rows[x].restaurante = {};
+          rows[x].restaurante.horariosFuncionamento = {};
+          rows[x].restaurante.diasFechado = [];
+          for (const [key, value] of Object.entries(rows[x])) {
+            if (key.split("_")[0] === "h") {
+              const nome = key.split("_")[1];
+              if (value) {
+                rows[x].restaurante.horariosFuncionamento[nome] = value;
+              }
+              if (!value) {
+                rows[x].restaurante.diasFechado.push(nome);
+              }
+              delete rows[x][key];
+            }
+            if (key.split("_")[0] === "r") {
+              const nome = key.split("_")[1];
+              rows[x].restaurante[nome] = value;
+              delete rows[x][key];
+            }
+            if (key.split("_")[0] === "p") {
+              const nome = key.split("_")[1];
+              rows[x][nome] = value;
+              delete rows[x][key];
+            }
+          }
+        }
+        return rows;
+      });
+
+    return res.status(200).json(todosOsProdutosComSeusRestaurantes);
   } catch (error) {
     return res.status(500).json(error.message);
   }

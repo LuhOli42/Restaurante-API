@@ -16,7 +16,7 @@ routes.post("/loginRestaurant", login.restaurant);
 
 //product related
 routes.get("/listAllProducts", product.listAllProducts);
-routes.get("/listRestaurantProduct", product.listRestaurant);
+routes.get("/listRestaurantProduct/:restaurantId", product.listRestaurant);
 routes.get("/dataProduct/:productId", product.data);
 
 //user related
