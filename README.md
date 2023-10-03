@@ -41,7 +41,8 @@ npm install
 
 Depois de instalar todas as dependecias
 
-- Preenchar os dados do arquivo .env.exemplo, com o endereço do seu banco dados, a porta que o servidor irá utilizar e crie uma senha em string para sua api
+- Preenchar os dados do arquivo .env.exemplo, com o endereço do seu banco dados, a porta que o servidor irá utilizar e crie uma senha em string para sua api.
+- Renomeie .env.exemplo para .env
 - Abra seu banco de dados e rode o arquivo `schema.sql`
 - Agora é só rodar a API :rocket:
 
