@@ -557,6 +557,7 @@ Essa rota deleta o produto
 ## Proximas features
 
 - [x] Criar promoções
+- [ ] Adicionar migrations
 - [ ] Arrumar a resposta de criar/listar todos os produtos,dados e atualizar o restaurante para informar o Id
 - [ ] Atualizar/deletar promoção
 - [ ] Otimizar a filtragem do banco de dados
